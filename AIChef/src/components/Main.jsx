@@ -1,14 +1,21 @@
+import {useState} from 'react'
+
 export default function Main(){
-    const ingredients = []
+    const [ingredients, setIngredients] = useState([])
     
-    function handleSubmit(e) {
-        e.preventDefault()
-        
+    function addIngredient(formData) {
+        const newIngredient = formData.get("ingredient")
+        setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
+
+    const ingredientsList = ingredients.map((ingredient) => {
+        return <li>{ingredient}</li>
+    })
+    
 
     return (
         <main>
-            <form onSubmit={handleSubmit} className="add-ingredient-form"> 
+            <form action={addIngredient} className="add-ingredient-form"> 
                 <input
                     type="text" 
                     placeholder="e.g. tomatoes" 
@@ -17,6 +24,9 @@ export default function Main(){
                 />
                 <button>+ Add ingredient</button>
             </form>
+            <ul>
+                {ingredientsList}
+            </ul>
         </main>
     )
 }
